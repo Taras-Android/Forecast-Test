@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/weatherImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/view_avg_temp"
+            app:layout_constraintStart_toEndOf="@id/weatherImage"
+            app:layout_constraintTop_toTopOf="@id/weatherImage"
+            app:layout_constraintEnd_toStartOf="@id/view_date"
+            android:layout_marginStart="8dp"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="12 C" />
+
+        <TextView
+            android:id="@+id/view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/weatherImage"
+            app:layout_constraintStart_toEndOf="@id/view_avg_temp"
+            android:textColor="#000000"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="2023-05-08"
+            />
+
+        <TextView
+            android:id="@+id/view_min_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/view_avg_temp"
+            app:layout_constraintTop_toBottomOf="@id/view_avg_temp"
+            android:text="min : 6 C"/>
+
+        <TextView
+            android:id="@+id/view_dash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/view_min_temp"
+            app:layout_constraintTop_toBottomOf="@id/view_avg_temp"
+            android:text="  -  "
+            />
+
+        <TextView
+            android:id="@+id/view_max_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/view_dash"
+            app:layout_constraintTop_toBottomOf="@id/view_avg_temp"
+            android:text="max : 15 C"/>
+
+        <TextView
+            android:id="@+id/view_forecast_day_description"
+            app:layout_constraintStart_toStartOf="@id/view_avg_temp"
+            app:layout_constraintTop_toBottomOf="@id/view_min_temp"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Patchy rain possible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
