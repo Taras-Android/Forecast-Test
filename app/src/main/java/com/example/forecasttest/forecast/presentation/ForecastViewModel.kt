@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.forecasttest.forecast.business.Forecast
+import com.example.forecasttest.location.business.LocationRepository
+import com.example.forecasttest.location.data.LocationCallback
 import com.example.forecasttest.shared.business.ForecastRepository
 import com.example.forecasttest.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
     private val repository: ForecastRepository,
+    private val locationRepository: LocationRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
@@ -46,12 +49,17 @@ class ForecastViewModel @Inject constructor(
                         it.description,
                         it.icon
                     )
-                }
+                }, result.data.location
             )
         )
     }
 
     private fun errorHandle() {
         _viewState.postValue(ForecastViewState.Error)
+    }
+
+    fun getCurrentLocation(locationCallback: LocationCallback) {
+        _viewState.postValue(ForecastViewState.Loading)
+        locationRepository.requestCurrentLocation(locationCallback)
     }
 }

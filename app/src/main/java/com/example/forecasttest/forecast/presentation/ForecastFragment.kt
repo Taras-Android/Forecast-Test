@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.forecasttest.databinding.ForecastFragmentBinding
+import com.example.forecasttest.location.data.LocationCallback
 import dagger.hilt.android.AndroidEntryPoint
+
 @AndroidEntryPoint
 class ForecastFragment : Fragment() {
     private lateinit var binding: ForecastFragmentBinding
@@ -32,7 +34,11 @@ class ForecastFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             updateUI(viewState)
         }
-        viewModel.loadProductList("lviv", 14) //test data
+        viewModel.getCurrentLocation((object : LocationCallback {
+            override fun onLocationReceived(latitude: Double, longitude: Double) {
+                viewModel.loadProductList("$latitude,$longitude", 14)
+            }
+        }))
     }
 
     private fun updateUI(viewState: ForecastViewState) {
@@ -42,6 +48,7 @@ class ForecastFragment : Fragment() {
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
                 adapter.setData(viewState.productList)
+                requireActivity().title = viewState.location.name
             }
             ForecastViewState.Error -> {
                 binding.viewForecast.isVisible = false
