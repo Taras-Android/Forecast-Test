@@ -35,6 +35,8 @@ class ForecastRepositoryAPI @Inject constructor(private val service: WeatherServ
         }
     }
 
+
+
     private fun generateParams(city: String, days: Int) : Map<String, String>{
         val params: HashMap<String, String> = HashMap()
         params[Queries.KEY] = KEY

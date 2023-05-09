@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.forecasttest.databinding.ForecastFragmentBinding
 import com.example.forecasttest.location.data.LocationCallback
+import com.example.forecasttest.shared.presentation.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,9 @@ class ForecastFragment : Fragment() {
                 viewModel.loadProductList("$latitude,$longitude", 14)
             }
         }))
+
+         val activityViewModel: MainActivityViewModel by activityViewModels()
+        activityViewModel.setSearchListener(viewModel.getSearchListener())
     }
 
     private fun updateUI(viewState: ForecastViewState) {

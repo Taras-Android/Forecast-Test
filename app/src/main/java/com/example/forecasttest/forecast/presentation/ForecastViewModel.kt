@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.forecasttest.forecast.business.Forecast
 import com.example.forecasttest.location.business.LocationRepository
 import com.example.forecasttest.location.data.LocationCallback
+import com.example.forecasttest.search.data.SearchListener
 import com.example.forecasttest.shared.business.ForecastRepository
 import com.example.forecasttest.shared.data.repository.api.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,11 @@ class ForecastViewModel @Inject constructor(
     val viewState: LiveData<ForecastViewState>
         get() = _viewState
 
+    private val searchListener: SearchListener = (object : SearchListener {
+        override fun onStartSearch(query: String) {
+            loadProductList(query, 14)
+        }
+    })
 
     fun loadProductList(city: String, days: Int) {
         viewModelScope.launch(dispatcher) {
@@ -35,6 +41,7 @@ class ForecastViewModel @Inject constructor(
                 is Result.Success -> successHandle(result)
             }
         }
+
     }
 
     private fun successHandle(result: Result.Success<Forecast>) {
@@ -61,5 +68,9 @@ class ForecastViewModel @Inject constructor(
     fun getCurrentLocation(locationCallback: LocationCallback) {
         _viewState.postValue(ForecastViewState.Loading)
         locationRepository.requestCurrentLocation(locationCallback)
+    }
+
+    fun getSearchListener(): SearchListener {
+        return searchListener
     }
 }
